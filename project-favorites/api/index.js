@@ -8,6 +8,10 @@ http.createServer((req, res) => {
 
     const { name, url, del } = URL.parse(req.url, true).query
 
+    res.writeHead(200, {
+        'Access-Control-Allow-Origin':'*'
+    })
+
     function writeFile(cb) {
         fs.writeFile(
             path.join(__dirname, 'urls.json'),
