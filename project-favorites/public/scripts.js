@@ -21,6 +21,7 @@ function addElement({ name, url }) {
     const li = document.createElement('li')
     const a = document.createElement("a")
     const trash = document.createElement("span")
+    const editButton = document.createElement('button'); // Adicionando botão de edição
 
     a.href = url
     a.innerHTML = name
@@ -32,10 +33,16 @@ function addElement({ name, url }) {
         fetch(`http://localhost:3000/?name=${name}&url=${url}&del=1/`)
 
     }
+    editButton.textContent = 'Editar'; // Configurando o texto do botão de edição
+    editButton.addEventListener('click', () => {
+    // Lógica de edição aqui
+    updateElement({ name, url, id: li.id }); // Chamando a função de atualização
+  });
     
     ul.append(li)
     li.append(a)
     li.append(trash)
+    li.append(editButton);
     
     
 }
@@ -46,8 +53,9 @@ function removeElement(element) {
         element.parentNode.remove()
       
     }
-
 }
+
+
 
 form.addEventListener('submit', (event) => {
     
