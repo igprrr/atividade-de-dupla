@@ -13,7 +13,7 @@ html {
 /* Estilos para o corpo da página */
 body {
   font-family: 'Quicksand', sans-serif;
-  background: #0817a3;
+  background: #4e3f5f;
 }
 
 /* Define a largura e margens para o contêiner principal */
@@ -27,7 +27,7 @@ body {
 h1 {
   text-align: center;
   color: #fff;
-  background: #0e1445;
+  background: #569266;
   padding: 10px 0;
   font-size: 3.4rem;
   margin-bottom: 20px;
@@ -62,7 +62,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #bea467e9;
 }
 
 /* Estilos para os botões "Editar" e "Excluir" */
