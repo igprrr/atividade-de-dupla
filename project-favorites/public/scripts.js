@@ -1,83 +1,87 @@
-const ul = document.querySelector('ul')
-const input = document.querySelector('input')
-const form = document.querySelector('form')
+const ul = document.querySelector('ul');
+const input = document.querySelector('input');
+const form = document.querySelector('form');
 
-
-
-
- //Função que carrega o conteúdo da API.
+// Função que carrega o conteúdo da API.
 async function load() {
-    // fetch está como await para evitar que entre num esquema de promisse e só devolva o conteúdo após a iteração qua acontece em seguida.
-    const res = await fetch('http://localhost:3000/')
-        .then(data => data.json())
-    // Iterando no vetor com o conteúdo (JSON) que está vindo da API e adicionando-os no frontend.
-    res.urls.map(({name, url}) => addElement({name, url}))
+  const res = await fetch('http://localhost:3000/').then(data => data.json());
+  res.urls.map(({ name, url, id }) => addElement({ name, url, id }));
 }
 
-load()
+load();
 
+function addElement({ name, url, id }) {
+  const li = document.createElement('li');
+  li.id = id;
 
-function addElement({ name, url }) {
-    const li = document.createElement('li')
-    const a = document.createElement("a")
-    const trash = document.createElement("span")
-    const editButton = document.createElement('button'); // Adicionando botão de edição
+  const a = document.createElement("a");
+  const trash = document.createElement("span");
+  const editButton = document.createElement('button');
 
-    a.href = url
-    a.innerHTML = name
-    a.target = "_blank"
+  a.href = url;
+  a.innerHTML = name;
+  a.target = "_blank";
 
-    trash.innerHTML = "x"
-    trash.onclick = () => {
-        removeElement(trash)
-        fetch(`http://localhost:3000/?name=${name}&url=${url}&del=1/`)
+  trash.innerHTML = "x";
+  trash.onclick = () => {
+    removeElement(li);
+    fetch(`http://localhost:3000/?name=${name}&url=${url}&del=1/`);
+  };
 
-    }
-    editButton.textContent = 'Editar'; // Configurando o texto do botão de edição
-    editButton.addEventListener('click', () => {
-    // Lógica de edição aqui
-    updateElement({ name, url, id: li.id }); // Chamando a função de atualização
+  editButton.textContent = 'Editar';
+  editButton.addEventListener('click', () => {
+    updateElement({ name, url, id });
   });
-    
-    ul.append(li)
-    li.append(a)
-    li.append(trash)
-    li.append(editButton);
-    
-    
+
+  ul.append(li);
+  li.append(a);
+  li.append(trash);
+  li.append(editButton);
 }
 
 function removeElement(element) {
-    if (confirm('Tem certeza que deseja deletar?')){
-     
-        element.parentNode.remove()
-      
-    }
+  if (confirm('Tem certeza que deseja deletar?')) {
+    element.remove();
+  }
 }
 
+function updateElement({ name, url, id }) {
+  const li = document.getElementById(id);
+  const newName = prompt("Digite o novo nome:", name);
+  const newUrl = prompt("Digite a nova URL:", url);
 
+  if (!newName || !newUrl) {
+    alert("Nome e URL devem ser preenchidos!");
+    return;
+  }
+
+  li.children[0].innerHTML = newName;
+  li.children[0].href = newUrl;
+  li.children[1].onclick = () => {
+    removeElement(li.children[1]);
+    fetch(`http://localhost:3000/?name=${newName}&url=${newUrl}&del=1/`);
+  };
+}
 
 form.addEventListener('submit', (event) => {
-    
-    event.preventDefault();
+  event.preventDefault();
 
-    let { value } = input
+  let { value } = input;
 
-    if (!value)
-        return alert('Preencha o campo!')
+  if (!value)
+    return alert('Preencha o campo!');
 
-    const [name, url] = value.split(',')
+  const [name, url] = value.split(',');
 
-    if (!url)
-        return alert('O texto não está formatado da maneira correta.')
+  if (!url)
+    return alert('O texto não está formatado da maneira correta.');
 
-    if (!/^http/.test(url))
-        return alert('Digite a url da maneira correta.')
+  if (!/^http/.test(url))
+    return alert('Digite a URL corretamente.');
 
-    addElement({ name, url })
+  addElement({ name, url });
 
-    input.value = ''
+  input.value = '';
 
-    fetch(`http://localhost:3000/?name=${name}&url=${url}/`)
-
-})
+  fetch(`http://localhost:3000/?name=${name}&url=${url}/`);
+});
