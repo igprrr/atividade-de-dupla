@@ -43,8 +43,13 @@ function addElement({ name, url, id }) {
   // Adiciona os elementos na lista
   ul.append(li);
   li.append(a);
-  li.append(editButton);
-  li.append(deleteButton);
+
+  // Cria um contêiner para os botões "Editar" e "Excluir" e os adiciona ao contêiner
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add('button-container');
+  buttonContainer.append(editButton, deleteButton);
+
+  li.append(buttonContainer);
 }
 
 // Função para remover um elemento da lista
@@ -67,8 +72,8 @@ function updateElement({ name, url, id }) {
 
   li.children[0].innerHTML = newName;
   li.children[0].href = newUrl;
-  li.children[2].onclick = () => {
-    removeElement(li.children[2]);
+  li.children[1].onclick = () => {
+    removeElement(li.children[1]);
     fetch(`http://localhost:3000/?name=${newName}&url=${newUrl}&del=1/`);
   };
 }
