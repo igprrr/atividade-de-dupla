@@ -1,92 +1,130 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;600&display=swap');
 
+/* Define o box-sizing para border-box em todos os elementos */
 * {
   box-sizing: border-box;
 }
 
+/* Define o tamanho da fonte base para 10px (62.5% de 16px) */
 html {
   font-size: 62.5%;
 }
 
+/* Estilos para o corpo da página */
 body {
   font-family: 'Quicksand', sans-serif;
-  
-  background: #dd0896;
+  background: #0817a3;
 }
 
+/* Define a largura e margens para o contêiner principal */
 .container {
   width: 80%;
   max-width: 400px;
-  
   margin: auto;
 }
 
+/* Estilos para o cabeçalho */
 h1 {
-  text-align:center;
-  color: white;
-  
+  text-align: center;
+  color: #fff;
+  background: #0e1445;
+  padding: 10px 0;
   font-size: 3.4rem;
+  margin-bottom: 20px;
+  border-radius: 10px;
 }
 
-input {
+/* Estilos para o campo de texto */
+input[type="text"] {
   width: 100%;
-  
   padding: 8px 16px;
   margin-bottom: 32px;
-  
   border-radius: 16px;
   border: 1px solid #ccc;
-  
   outline: none;
-  
   font-size: 1.6rem;
-  font-weight:300;
+  font-weight: 300;
 }
 
+/* Estilos para a lista */
 ul {
   background: white;
-  
   box-shadow: 0px 4px 8px -2px #00000033;
   border-radius: 6px;
   border: 1px solid #ddd;
-  
   padding: 16px;
-  
   font-size: 1.4rem;
-  
 }
 
+/* Estilos para os itens da lista */
 li {
   list-style: none;
-  
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  
   border-bottom: 1px solid #ddd;
 }
 
-
-a {
-  display: block;
-  
-  color: #333;
-  text-decoration: none;  
-  
-  padding: 16px 0;
-  font-size: 1.8rem;
-  
+/* Estilos para os botões "Editar" e "Excluir" */
+.edit-button,
+.delete-button {
+  margin-left: 10px;
 }
 
+/* Estilos para os links dentro dos itens da lista */
+a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 16px 0;
+  font-size: 1.8rem;
+}
+
+/* Estilos para os links quando hover */
 a:hover {
   font-weight: bold;
 }
 
+/* Estilos para o primeiro e último item da lista */
 li:first-child,
 li:last-child {
   border: none;
 }
 
+/* Estilos para o span dentro dos itens da lista */
 li span {
-  cursor:pointer;
+  cursor: pointer;
+}
+
+/* Estilos para os botões */
+button {
+  display: inline-block;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 0;
+}
+
+/* Estilos para os botões quando hover */
+button:hover {
+  font-weight: bold;
+}
+
+/* Estilos específicos para o botão "Editar" */
+.edit-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+/* Estilos específicos para o botão "Excluir" */
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
 }

@@ -2,49 +2,59 @@ const ul = document.querySelector('ul');
 const input = document.querySelector('input');
 const form = document.querySelector('form');
 
-// Função que carrega o conteúdo da API.
+// Função que carrega o conteúdo da API
 async function load() {
+  // Faz uma requisição à API e obtém os dados em JSON
   const res = await fetch('http://localhost:3000/').then(data => data.json());
+  // Para cada item retornado, chama a função para adicionar na lista
   res.urls.map(({ name, url, id }) => addElement({ name, url, id }));
 }
 
 load();
 
+// Função para adicionar um elemento na lista
 function addElement({ name, url, id }) {
+  // Cria os elementos HTML necessários
   const li = document.createElement('li');
   li.id = id;
 
   const a = document.createElement("a");
-  const trash = document.createElement("span");
   const editButton = document.createElement('button');
+  const deleteButton = document.createElement('button');
 
+  // Define os atributos e conteúdo dos elementos
   a.href = url;
   a.innerHTML = name;
   a.target = "_blank";
 
-  trash.innerHTML = "x";
-  trash.onclick = () => {
-    removeElement(li);
-    fetch(`http://localhost:3000/?name=${name}&url=${url}&del=1/`);
-  };
-
   editButton.textContent = 'Editar';
+  editButton.classList.add('edit-button'); // Adiciona a classe para estilizar como botão
   editButton.addEventListener('click', () => {
     updateElement({ name, url, id });
   });
 
+  deleteButton.textContent = 'x';
+  deleteButton.classList.add('delete-button'); // Adiciona a classe para estilizar como botão
+  deleteButton.addEventListener('click', () => {
+    removeElement(li);
+    fetch(`http://localhost:3000/?name=${name}&url=${url}&del=1/`);
+  });
+
+  // Adiciona os elementos na lista
   ul.append(li);
   li.append(a);
-  li.append(trash);
   li.append(editButton);
+  li.append(deleteButton);
 }
 
+// Função para remover um elemento da lista
 function removeElement(element) {
   if (confirm('Tem certeza que deseja deletar?')) {
     element.remove();
   }
 }
 
+// Função para atualizar um elemento da lista
 function updateElement({ name, url, id }) {
   const li = document.getElementById(id);
   const newName = prompt("Digite o novo nome:", name);
@@ -57,12 +67,13 @@ function updateElement({ name, url, id }) {
 
   li.children[0].innerHTML = newName;
   li.children[0].href = newUrl;
-  li.children[1].onclick = () => {
-    removeElement(li.children[1]);
+  li.children[2].onclick = () => {
+    removeElement(li.children[2]);
     fetch(`http://localhost:3000/?name=${newName}&url=${newUrl}&del=1/`);
   };
 }
 
+// Event listener para o formulário de adicionar elementos
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
